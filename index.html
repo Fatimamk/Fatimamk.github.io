@@ -31,7 +31,7 @@
         const sUrl = "https://afiyajaj.github.io/PWA_Website/";
         const doc2 = { _id: md5(sUrl), url: sUrl };
 
-        err = "error";
+        let err = "error";
         
         db.bulkDocs(doc2).then((res) => {
             console.log("Documents inserted OK");
