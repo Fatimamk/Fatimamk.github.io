@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title class="title">Document</title>
+</head>
+
+<body class="text-center">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <main role="main" class="inner cover px-5 pt-5">
+        <h1 class="cover-heading py-2">Welcome to Korner!</h1>
+        <h2 class="cover-heading py-3">Start by Reserving Your Order...</h2>
+        <p class="lead py-3"> In order to make sure we can meet all of our customer's needs, please reserve an order before placing an order. make sure to save your reservation ID! You can also browse our dishes without reserving an order by clicking <a href="https://afiyajaj.github.io/PWA_Website/">here</a>. Thank you for your consideration!</p> 
+        <p class="lead">
+        </p>
+    </main>
+    <h1 class="title"></h1>
+    <div id="docs"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pouchdb/7.2.2/pouchdb.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+    <script type="text/javascript">
+        const db = new PouchDB('urls');
+        const sUrl = "https://afiyajaj.github.io/PWA_Website/";
+        const doc2 = { _id: md5(sUrl), url: sUrl };
+
+        
+        db.bulkDocs(doc2).then((res) => {
+            console.log("Documents inserted OK");
+        }).catch(() => {
+            console.error(err);
+        });
+
+        db.allDocs({ include_docs: true, descending: true }, (err, doc) => {
+            doc.rows.forEach(e => {
+                $("#docs").append(`<p> <a href="showQrCode.html?q=${e.doc._id}" id="docs" style="color: white" class="btn btn-lg btn-danger">Save My Spot</a>
+                `);
+                console.log(e.doc);
+            });
+
+        }).catch((err) => {
+            console.error(err);
+        });
+
+    </script>
+</body>
