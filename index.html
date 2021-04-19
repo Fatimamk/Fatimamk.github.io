@@ -19,6 +19,7 @@
         <h2 class="cover-heading py-3">Start by Reserving Your Order...</h2>
         <p class="lead py-3"> In order to make sure we can meet all of our customer's needs, please reserve an order before placing an order. make sure to save your reservation ID! You can also browse our dishes without reserving an order by clicking <a href="https://afiyajaj.github.io/PWA_Website/">here</a>. Thank you for your consideration!</p> 
         <p class="lead">
+        <button type="button" id="docs" class="btn btn-danger"> <a style="color: white" href="showQrCode.html">Click Here</a> </button>
         </p>
     </main>
     <h1 class="title"></h1>
@@ -29,11 +30,9 @@
     <script type="text/javascript">
         const db = new PouchDB('urls');
         const sUrl = "https://afiyajaj.github.io/PWA_Website/";
-        const doc2 = { _id: md5(sUrl), url: sUrl };
-
-        let err = "error";
+        const doc = { _id: md5(sUrl), url: sUrl };
         
-        db.bulkDocs(doc2).then((res) => {
+        db.bulkDocs(doc).then((res) => {
             console.log("Documents inserted OK");
         }).catch(() => {
             console.error(err);
@@ -41,7 +40,7 @@
 
         db.allDocs({ include_docs: true, descending: true }, (err, doc) => {
             doc.rows.forEach(e => {
-                $("#docs").append(`<p> <a href="showQrCode.html?q=${e.doc._id}" id="docs" style="color: white" class="btn btn-lg btn-danger">Save My Spot</a>
+                $("#docs").append(`<a href="showQrCode.html?q=${e.doc._id}" style="color: white">Save My Spot</a>
                 `);
                 console.log(e.doc);
             });
