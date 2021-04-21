@@ -31,23 +31,32 @@
         const db = new PouchDB('urls');
         const sUrl = "https://afiyajaj.github.io/PWA_Website/";
         const doc = { _id: md5(sUrl), url: sUrl };
-        
-        db.bulkDocs(doc).then((res) => {
-            console.log("Documents inserted OK");
+
+        db.put(doc).then((res) => {
+            console.log("Document inserted OK");
         }).catch(() => {
             console.error(err);
         });
 
-        db.allDocs({ include_docs: true, descending: true }, (err, doc) => {
-            doc.rows.forEach(e => {
-                $("#docs").append(`<a href="showQrCode.html?q=${e.doc._id}" style="color: white">Save My Spot</a>
+        db.get(md5(sUrl)).then((doc) => {
+            $("#docs").append(`<a href="showQrCode.html?q=${doc._id}" style="color: white">Save My Spot</a>
                 `);
-                console.log(e.doc);
-            });
-
+        }).then((res) => {
+            console.log("The thing happened");
         }).catch((err) => {
             console.error(err);
-        });
+        }); 
+
+        // db.allDocs({ include_docs: true, descending: true }, (err, doc) => {
+        //     doc.rows.forEach(e => {
+        //         $("#docs").append(`<a href="showQrCode.html?q=${e.doc._id}" style="color: white">Save My Spot</a>
+        //         `);
+        //         console.log(e.doc);
+        //     });
+
+        // }).catch((err) => {
+        //     console.error(err);
+        // });
 
     </script>
 </body>
